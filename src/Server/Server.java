@@ -27,8 +27,10 @@ public class Server {
     /**
      * Конструктор создаёт сервер. Затем для каждого подключения создаётся объект Connection и добавляет его в список подключений.
      */
-    public Server(int port) {
-        try {
+    public Server(int port)
+    {
+        try
+        {
             serverSocket = new ServerSocket(port);
             System.out.println(InetAddress.getLocalHost());
 
@@ -41,9 +43,11 @@ public class Server {
 
                 connection.start();
             }
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
-        } finally {
+        } finally
+        {
             closeAll();
         }
     }
@@ -51,8 +55,10 @@ public class Server {
     /**
      * Закрывает все потоки всех соединений а также серверный сокет
      */
-    private void closeAll() {
-        try {
+    private void closeAll()
+    {
+        try
+        {
             serverSocket.close();
 
             // Перебор всех Connection и вызов метода close() для каждого. Блок
@@ -106,8 +112,10 @@ public class Server {
          * пересылается всем остальным.
          */
         @Override
-        public void run() {
-            try {
+        public void run()
+        {
+            try
+            {
                 name = in.readLine();
                 // Отправляем всем клиентам сообщение о том, что зашёл новый пользователь
                 synchronized(connections)
@@ -163,8 +171,10 @@ public class Server {
         /**
          * Закрывает входной и выходной потоки и сокет
          */
-        public void close() {
-            try {
+        public void close()
+        {
+            try
+            {
                 in.close();
                 out.close();
                 socket.close();
@@ -172,11 +182,13 @@ public class Server {
                 // Если больше не осталось соединений, закрываем всё, что есть и
                 // завершаем работу сервера
                 connections.remove(this);
-                if (connections.size() == 0) {
+                if (connections.size() == 0)
+                {
                     Server.this.closeAll();
                     System.exit(0);
                 }
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 System.err.println("Threads were not closed!");
             }
         }
